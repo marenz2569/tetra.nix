@@ -19,22 +19,21 @@ pkgs.mkShell {
     custom_gnuradio.pythonEnv
     socat
     osmo-tetra
+    coreutils-full
   ];
 
   shellHook = ''
     session="tetra-rx"
 
-    alias tmux='tmux -f /dev/null'
-
     tmux new-session -d -s $session
 
-    window=0
-    tmux rename-window -t $session:$window 'receiver'
+    window=2
+    tmux new-window -t $session:$window -n 'receiver'
     tmux send-keys -t $session:$window 'gnuradio-companion ${telive}/gnuradio-companion/receiver_udp/telive_1ch_simple_gr37_udp.grc'
 
-    window=1
+    window=3
     tmux new-window -t $session:$window -n 'decoder'
-    tmux send-keys -t $session:$window 'socat STDIO UDP-LISTEN:42001 | ${osmo-tetra.src}/src/demod/python-3.7/simdemod2.py -o /dev/stdout -i /dev/stdin | float_to_bits /dev/stdin /dev/stdout | tetra-rx /dev/stdin'
+    tmux send-keys -t $session:$window 'socat STDIO UDP-LISTEN:42001 | stdbuf -i0 -o0 ${osmo-tetra.src}/src/demod/python-3.7/simdemod2.py -o /dev/stdout -i /dev/stdin | stdbuf -i0 -o0 float_to_bits /dev/stdin /dev/stdout | stdbuf -i0 -o0 tetra-rx /dev/stdin'
 
     tmux attach-session -t $session
   '';
