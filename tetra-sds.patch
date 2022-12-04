@@ -1,0 +1,17 @@
+diff --git a/src/tetra_sds.c b/src/tetra_sds.c
+index f86528a..0a4713b 100644
+--- a/src/tetra_sds.c
++++ b/src/tetra_sds.c
+@@ -392,11 +392,7 @@ unsigned int parse_d_sds_data(struct tetra_mac_state *tms, struct msgb *msg, uns
+ 								}
+ 
+ 								for(a=0;a<l;a++) {
+-									if (isprint(udata[a])) {
+-										sprintf(tmpstr,"%c",udata[a]);
+-									} else {
+-										sprintf(tmpstr,"\\x%2.2X",udata[a]);
+-									}
++									sprintf(tmpstr,"\\x%2.2X",udata[a]);
+ 									strcat(descr,tmpstr);
+ 								}
+ 								strcat(descr,"]");

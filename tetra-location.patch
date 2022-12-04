@@ -1,0 +1,30 @@
+diff --git a/src/tetra_sds.c b/src/tetra_sds.c
+index 0a4713b..c3b6338 100644
+--- a/src/tetra_sds.c
++++ b/src/tetra_sds.c
+@@ -588,7 +588,7 @@ int decode_lip(char *out, int outlen,uint8_t *bits,int datalen)
+ 			{
+ 				longtitude=(lip_longtitude*180.0)/(1.0*(1<<24)); londir='E';
+ 			}
+-			snprintf(out,outlen,"SHORT LOCATION REPORT: lat:%.6f%c lon:%.6f%c error%s speed:%4.1fkm/h heading:%s",lattitude,latdir,longtitude,londir,lip_position_errors[lip_pos_error],get_horiz_velocity(lip_horiz_velocity),get_lip_dirtravel_type(lip_dir_travel));
++			snprintf(out,outlen,"SHORT LOCATION REPORT: lat:%.6f%c lon:%.6f%c error%s speed:%4.1fkm/h heading:%s type_adddata:%d datalen:%d n:%d datalen-n:%d adddata:%d",lattitude,latdir,longtitude,londir,lip_position_errors[lip_pos_error],get_horiz_velocity(lip_horiz_velocity),get_lip_dirtravel_type(lip_dir_travel), lip_type_adddata, datalen, n, datalen-n, bits_to_uint(bits+n, 8) );
+ 			break;
+ 
+ 		case 1: /* LONG-type pdus */
+@@ -767,6 +767,16 @@ int decode_lip(char *out, int outlen,uint8_t *bits,int datalen)
+ 					strcat(tmpstr,tmpstr2);
+ 
+ 
++					sprintf(tmpstr2,"rest of the data (datalen: %d, n: %d, rest %d bits)", datalen, n, datalen-n);
++					strcat(tmpstr,tmpstr2);
++
++					if (datalen - n == 19) {
++						m=5; uint8_t element_identifier=bits_to_uint(bits+n, m); n=n+m;
++						m=6; uint8_t element_length=bits_to_uint(bits+n, m); n=n+m;
++						m=8; uint8_t data=bits_to_uint(bits+n, m); n=n+m;
++						sprintf(tmpstr2," element_identifier: %d, element_length: %d, data: %d", element_identifier, element_length, data);
++						strcat(tmpstr,tmpstr2);
++					}
+ 
+ 					snprintf(out,outlen,"LONG LOCATION REPORT PDU [%s]",tmpstr);
+ 

@@ -9,28 +9,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, ... }:
+  outputs = { self, nixpkgs, nixpkgs-2111, utils, ... }:
     utils.lib.eachDefaultSystem
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          pkgs-2111 = import nixpkgs-2111 {
+            inherit system;
+            config.permittedInsecurePackages = [
+              "python2.7-Pillow-6.2.2"
+              "python2.7-urllib3-1.26.2"
+            ];
+          };
 
-          package = pkgs.callPackage ./derivation.nix { };
+          osmo-tetra = pkgs.callPackage ./osmo-tetra.nix { };
         in
         rec {
           checks = packages;
+          devShells.default = import ./shell.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
           packages = {
-            osmo-tetra = package;
-            default = package;
+            osmo-tetra = osmo-tetra;
+            default = osmo-tetra;
           };
         }
       ) // {
       hydraJobs =
         let
-          hydraSystems = [
-            "x86_64-linux"
-            "aarch64-linux"
-          ];
+          hydraSystems = [ "x86_64-linux" ];
         in
         builtins.foldl'
           (hydraJobs: system:

@@ -2,14 +2,16 @@
 
 stdenv.mkDerivation rec {
   pname = "osmo-tetra";
-  version = "615146270fbb391c3bae244d181ada645608a7bf";
+  version = "f730be3e7e426bf4d2b499574f66b26733642c3d";
 
   src = fetchFromGitHub {
-    owner = "osmocom";
-    repo = "osmo-tetra";
+    owner = "sq5bpf";
+    repo = "osmo-tetra-sq5bpf";
     rev = version;
-    sha256 = "sha256-7lhuyUfLV/fzZ0F8UkMKzQMUVY+dwB2m9Zzy8wwo6BI=";
+    sha256 = "sha256-a5lMrotuRd8rm07TdpEYklCdIICc64HJwB3Kl5PQ4Iw=";
   };
+
+  patches = [ ./tetra-sds.patch ./tetra-location.patch ];
 
   preBuild = "cd src";
 
