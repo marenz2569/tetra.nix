@@ -23,12 +23,17 @@
           };
 
           osmo-tetra = pkgs.callPackage ./osmo-tetra.nix { };
+          tetra-kit = pkgs.callPackage ./tetra-kit.nix { };
         in
         rec {
           checks = packages;
-          devShells.default = import ./shell.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
+          devShells = {
+            osmo-tetra = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
+            tetra-kit = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit; };
+          };
           packages = {
             osmo-tetra = osmo-tetra;
+            tetra-kit = tetra-kit;
             default = osmo-tetra;
           };
         }

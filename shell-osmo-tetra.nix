@@ -23,7 +23,7 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
-    session="tetra-rx"
+    session="osmo-tetra"
 
     tmux new-session -d -s $session
 
