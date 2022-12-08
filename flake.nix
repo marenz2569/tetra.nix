@@ -24,6 +24,7 @@
 
           osmo-tetra = pkgs.callPackage ./osmo-tetra.nix { };
           tetra-kit = pkgs.callPackage ./tetra-kit.nix { };
+          tetra-codec = pkgs.callPackage ./tetra-codec.nix { };
         in
         rec {
           checks = packages;
@@ -36,6 +37,7 @@
           packages = {
             osmo-tetra = osmo-tetra;
             tetra-kit = tetra-kit;
+            tetra-codec = tetra-codec;
             default = osmo-tetra;
           };
         }
