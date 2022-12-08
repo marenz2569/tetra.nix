@@ -29,7 +29,9 @@
           checks = packages;
           devShells = {
             osmo-tetra = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
+            osmo-tetra-tmux = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; shellHook = true; };
             tetra-kit = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit; };
+            tetra-kit-tmux = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit; shellHook = true; };
           };
           packages = {
             osmo-tetra = osmo-tetra;

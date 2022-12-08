@@ -1,4 +1,4 @@
-{ pkgs, osmo-tetra }:
+{ pkgs, osmo-tetra, shellHook ? false }:
 let
   custom_gnuradio = pkgs.gnuradio3_7.override {
     extraPackages = with pkgs.gnuradio3_7Packages; [ osmosdr ];
@@ -22,7 +22,7 @@ pkgs.mkShell {
     coreutils-full
   ];
 
-  shellHook = ''
+  shellHook = pkgs.lib.optionalString shellHook ''
     session="osmo-tetra"
 
     tmux new-session -d -s $session
