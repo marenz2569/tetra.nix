@@ -33,6 +33,7 @@
             osmo-tetra-tmux = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; shellHook = true; };
             tetra-kit = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit; };
             tetra-kit-tmux = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit; shellHook = true; };
+            speech-decode-notebook = import ./shell-speech-decode-notebook.nix { inherit pkgs; inherit tetra-codec; };
           };
           packages = {
             osmo-tetra = osmo-tetra;

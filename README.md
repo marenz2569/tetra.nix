@@ -12,3 +12,9 @@ The second one is [tetra-kit](https://gitlab.com/larryth/tetra-kit).
 
 To get a tmux session started with all the tools for osmo-tetra run: `nix run github:marenz2569/tetra.nix#osmo-tetra-tmux`.
 Analog for tetra-kit: `nix run github:marenz2569/tetra.nix#tetra-kit-tmux`.
+
+## Decoding Speech
+
+There is a speech [decode jupyter notebook](./Speech Decode.ipynb).
+Open the tetra-kit-tmux session. Run `decoder -d 2 | stdbuf -i0 -o0 grep "{\"" | stdbuf -i0 -o0 tee /dev/stderr data`.
+Run the jupyter notebook with `nix develop github:marenz2569/tetra.nix#speech-decode-notebook`.
