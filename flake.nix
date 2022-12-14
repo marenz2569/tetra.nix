@@ -10,7 +10,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-2111, utils, ... }:
-    utils.lib.eachDefaultSystem
+    utils.lib.eachSystem [ "x86_64-linux" ]
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -22,19 +22,19 @@
             ];
           };
 
-          osmo-tetra = pkgs.callPackage ./osmo-tetra.nix { };
-          tetra-kit-decoder = pkgs.callPackage ./tetra-kit-decoder.nix { };
-          tetra-kit-recorder = pkgs.callPackage ./tetra-kit-recorder.nix { };
-          tetra-codec = pkgs.callPackage ./tetra-codec.nix { };
+          osmo-tetra = pkgs.callPackage ./pkgs/osmo-tetra.nix { };
+          tetra-kit-decoder = pkgs.callPackage ./pkgs/tetra-kit-decoder.nix { };
+          tetra-kit-recorder = pkgs.callPackage ./pkgs/tetra-kit-recorder.nix { };
+          tetra-codec = pkgs.callPackage ./pkgs/tetra-codec.nix { };
         in
         rec {
           checks = packages;
           devShells = {
-            osmo-tetra = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
-            osmo-tetra-tmux = import ./shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; shellHook = true; };
-            tetra-kit = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit-decoder; inherit tetra-kit-recorder;};
-            tetra-kit-tmux = import ./shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit-decoder; inherit tetra-kit-recorder; shellHook = true; };
-            speech-decode-notebook = import ./shell-speech-decode-notebook.nix { inherit pkgs; inherit tetra-codec; };
+            osmo-tetra = import ./pkgs/shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; };
+            osmo-tetra-tmux = import ./pkgs/shell-osmo-tetra.nix { pkgs = pkgs-2111; inherit osmo-tetra; shellHook = true; };
+            tetra-kit = import ./pkgs/shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit-decoder; inherit tetra-kit-recorder;};
+            tetra-kit-tmux = import ./pkgs/shell-tetra-kit.nix { inherit pkgs; inherit tetra-kit-decoder; inherit tetra-kit-recorder; shellHook = true; };
+            speech-decode-notebook = import ./pkgs/shell-speech-decode-notebook.nix { inherit pkgs; inherit tetra-codec; };
           };
           packages = {
             osmo-tetra = osmo-tetra;
