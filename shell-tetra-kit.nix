@@ -1,4 +1,4 @@
-{ pkgs, tetra-kit, shellHook ? false }:
+{ pkgs, tetra-kit-recoder, tetra-kit-decoder, shellHook ? false }:
 let
   custom_gnuradio = pkgs.gnuradio3_8.override {
     extraPackages = with pkgs.gnuradio3_8Packages; [ osmosdr ];
@@ -10,7 +10,8 @@ pkgs.mkShell {
     tmux
     # gnuradio version 3.8
     custom_gnuradio
-    tetra-kit
+    tetra-kit-recoder
+    tetra-kit-decoder
   ];
 
   shellHook = pkgs.lib.optionalString shellHook ''

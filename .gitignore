@@ -1,0 +1,6 @@
+out/
+decoded/
+raw/
+log.txt
+result
+.ipynb_checkpoints/
