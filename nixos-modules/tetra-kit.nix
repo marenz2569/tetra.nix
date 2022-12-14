@@ -99,10 +99,14 @@ in {
         after = [ "setup-tetra-kit-recorder-${instanceName}.service" ];
 
         script = ''
-          exec ${pkgs.tetra-kit-recorder}/bin/recorder -r ${
-            toString instanceConfig.decoderPort
+          exec ${pkgs.faketty}/bin/faketty ${pkgs.tetra-kit-recorder}/bin/recorder -r ${
+            toString instanceConfig.recorderPort
           } ${instanceConfig.extraRecorderArgs} &
         '';
+
+        environment = {
+          "TERM" = "screen-256color";
+        };
 
         serviceConfig = {
           Type = "forking";
@@ -121,6 +125,7 @@ in {
       isNormalUser = false;
       isSystemUser = true;
       createHome = true;
+      homeMode = "770";
       group = cfg.group;
     };
   };
