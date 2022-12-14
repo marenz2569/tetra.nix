@@ -45,6 +45,22 @@
           };
         }
       ) // {
+      overlays.default = final: prev: {
+        inherit (self.packages."x86_64-linux")
+        tetra-kit-decoder tetra-kit-recorder;
+      };
+      nixosModules = {
+        tetra-kit = {
+          imports = [
+            ./nixos-modules/tetra-kit.nix
+          ];
+
+          nixpkgs.overlays = [
+            self.overlays.default
+          ];
+        };
+        default = self.nixosModules.tetra-kit;
+      };
       hydraJobs =
         let
           hydraSystems = [ "x86_64-linux" ];
