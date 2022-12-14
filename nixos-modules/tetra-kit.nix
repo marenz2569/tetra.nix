@@ -111,7 +111,7 @@ in {
           Restart = "always";
         };
       };
-    });
+    }) cfg.instances;
 
     # user accounts for systemd units
     users.users."${cfg.user}" = {
