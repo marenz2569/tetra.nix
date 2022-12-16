@@ -36,7 +36,55 @@
       "inputs": {
         "nixpkgs": "nixpkgs",
         "nixpkgs-2111": "nixpkgs-2111",
+        "tetra-kit-player": "tetra-kit-player",
+        "tetra-receiver": "tetra-receiver",
         "utils": "utils"
+      }
+    },
+    "tetra-kit-player": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1671140987,
+        "narHash": "sha256-O8AdjAK5/ZmIzldYnrKAsScBo0SYEzWqow/n4+B3Fck=",
+        "owner": "marenz2569",
+        "repo": "tetra-kit-player",
+        "rev": "e518c86de064f58ccec6f51af29f6b16ac8e31b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "marenz2569",
+        "repo": "tetra-kit-player",
+        "type": "github"
+      }
+    },
+    "tetra-receiver": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1671111446,
+        "narHash": "sha256-n5D6RuCaSv3BrZUWuosOeCKXZ4vc/6m4yBgwxKrFK2I=",
+        "owner": "marenz2569",
+        "repo": "tetra-receiver",
+        "rev": "8fa11cd267d463b8336758d02624866089b2c826",
+        "type": "github"
+      },
+      "original": {
+        "owner": "marenz2569",
+        "repo": "tetra-receiver",
+        "type": "github"
       }
     },
     "utils": {

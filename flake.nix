@@ -7,9 +7,21 @@
     utils = {
       url = "github:numtide/flake-utils";
     };
+
+    tetra-kit-player = {
+      url = "github:marenz2569/tetra-kit-player";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "utils";
+    };
+
+    tetra-receiver = {
+      url = "github:marenz2569/tetra-receiver";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "utils";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-2111, utils, ... }:
+  outputs = { self, nixpkgs, nixpkgs-2111, utils, tetra-kit-player, tetra-receiver, ... }:
     utils.lib.eachSystem [ "x86_64-linux" ]
       (system:
         let
@@ -59,7 +71,15 @@
             self.overlays.default
           ];
         };
-        default = self.nixosModules.tetra-kit;
+        tetra = {
+          imports = [
+            self.nixosModules.tetra-kit
+            tetra-kit-player.nixosModules.default
+            tetra-receiver.nixosModules.default
+            ./nixos-modules/tetra.nix
+          ];
+        };
+        default = self.nixosModules.tetra;
       };
       hydraJobs =
         let
