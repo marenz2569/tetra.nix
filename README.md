@@ -13,11 +13,8 @@ The second one is [tetra-kit](https://gitlab.com/larryth/tetra-kit).
 To get a tmux session started with all the tools for osmo-tetra run: `nix run github:marenz2569/tetra.nix#osmo-tetra-tmux`.
 Analog for tetra-kit: `nix run github:marenz2569/tetra.nix#tetra-kit-tmux`.
 
-## Decoding Speech
-
-There is a speech [decode jupyter notebook](./Speech Decode.ipynb).
-Open the tetra-kit-tmux session. Run `decoder -d 2 | stdbuf -i0 -o0 grep "{\"" | stdbuf -i0 -o0 tee /dev/stderr data`.
-Run the jupyter notebook with `nix develop github:marenz2569/tetra.nix#speech-decode-notebook`.
+I would recommend using the tetra-kit phy receiver and try out both osmo-tetra and tetra-kit for decoding the signal.
+If you want to use osmo-tetra decoder with the tetra-kit receiver use the following command: `socat STDIO UDP-LISTEN:42000 | stdbuf -i0 -o0 tetra-rx /dev/stdin` 
 
 ## Recording Tetra Signals and Web Frontend for Speech
 
@@ -38,5 +35,12 @@ services.tetra = {
     "tetra2.tetra.example.com".offset = 85000;
   };
 };
-
 ```
+
+Data from tetra-kit will be saved in `/var/lib/tetra-kit/tetra1.tetra.example.com` and `/var/lib/tetra-kit/tetra2.tetra.example.com` respectivly.
+
+## Decoding Speech using a hacked together Jupyter Notebook (not recommended)
+
+There is a speech [decode jupyter notebook](https://github.com/marenz2569/tetra.nix/blob/master/Speech%20Decode.ipynb).
+Open the tetra-kit-tmux session. Run `decoder -d 2 | stdbuf -i0 -o0 grep "{\"" | stdbuf -i0 -o0 tee /dev/stderr data`.
+Clone this repository and run the jupyter notebook with `nix develop .#speech-decode-notebook`.
