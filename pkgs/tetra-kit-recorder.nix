@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   src = fetchFromGitLab {
     owner = "larryth";
-    repo = pname;
+    repo = "tetra-kit";
     rev = version;
     sha256 = "sha256-mlxSWHEK+b0s1COLdXadwilfZtnlBqx/B4dOiDrwx9c=";
   };
