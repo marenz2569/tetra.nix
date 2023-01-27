@@ -1,0 +1,12 @@
+diff --git a/decoder/mac/mac.cc b/decoder/mac/mac.cc
+index 23c3591..7aedbd1 100644
+--- a/decoder/mac/mac.cc
++++ b/decoder/mac/mac.cc
+@@ -314,6 +314,7 @@ void Mac::serviceLowerMac(std::vector<uint8_t> data, int burstType)
+             else                                                                // second slot not stolen, so it is still traffic mode
+             {
+                 // do nothing, TCH/4.2 and 2.8 not taken into account
++								m_log->print(LogLevel::NONE, "TCH half slot not taken into account\n");
+             }
+         }
+         else                                                                    // otherwise signalling mode (see 19.4.4)

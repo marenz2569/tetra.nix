@@ -11,6 +11,8 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-mlxSWHEK+b0s1COLdXadwilfZtnlBqx/B4dOiDrwx9c=";
   };
 
+  patches = [ ./tetra-kit-decoder-debug-print.patch ];
+
   preBuild = "cd decoder";
 
   installPhase = ''
